@@ -38,11 +38,13 @@ class _EditNoteViewState extends State<EditNoteView> {
             IconButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  widget.note.title = _titleController.text;
-                  widget.note.subTitle = _contentController.text;
                   context
                       .read<NotesCubit>()
-                      .updateNote(widget.note)
+                      .updateNote(
+                        widget.note,
+                        _titleController.text,
+                        _contentController.text,
+                      )
                       .then((value) => Navigator.of(context).pop())
                       .onError((e, _) {
                     ScaffoldMessenger.of(context).showSnackBar(

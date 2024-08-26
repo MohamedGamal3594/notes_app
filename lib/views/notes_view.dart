@@ -6,6 +6,7 @@ import 'package:notes_app/cubits/notes_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/edit_note_view.dart';
 import 'package:notes_app/widgets/custom_text_field.dart';
+import 'package:uuid/uuid.dart';
 
 class NotesView extends StatelessWidget {
   const NotesView({super.key});
@@ -90,12 +91,10 @@ class _AddNoteBottomSheetState extends State<_AddNoteBottomSheet> {
                       context
                           .read<NotesCubit>()
                           .addNote(
-                            NoteModel(
-                              title: _titleController.text,
-                              subTitle: _contentController.text,
-                              date: DateFormat('MMMM d, y')
-                                  .format(DateTime.now()),
-                            ),
+                            const Uuid().v1(),
+                            _titleController.text,
+                            _contentController.text,
+                            DateFormat('MMMM d, y').format(DateTime.now()),
                           )
                           .then((_) => Navigator.pop(context))
                           .onError((e, _) {
